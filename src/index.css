@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Self-hosted fonts (variable) ───────────────────────────────────────── */
+@font-face {
+  font-family: 'Big Shoulders Display Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/big-shoulders-display-latin-wght-normal.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Hanken Grotesk Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2-variations');
+}
+
+@layer base {
+  :root {
+    --focus: #0B2D21;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: #EEF0EA;
+    color: #0C1D16;
+    font-family: 'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    font-feature-settings: 'ss01', 'tnum' 0;
+  }
+
+  /* Dark surfaces: hero, footer, admin. Flip the focus ring so it stays visible. */
+  .on-dark,
+  .admin-shell {
+    --focus: #FFD21F;
+  }
+  .admin-shell {
+    color-scheme: dark;
+    background-color: #08150F;
+    color: #EBF1EC;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: #FFD21F;
+    color: #0C1D16;
+  }
+
+  input[type='checkbox'] {
+    accent-color: #0B2D21;
+  }
+  .admin-shell input[type='checkbox'] {
+    accent-color: #5EDC9B;
+  }
+}
+
+/* ── Utilities ──────────────────────────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Halfway line: a rule with the centre spot in the middle. Used as section divider. */
+.halfway {
+  position: relative;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.2;
+}
+.halfway::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border: 1px solid currentColor;
+  border-radius: 9999px;
+  background: inherit;
+}
+
+/* Skeleton shimmer for loading cards */
+.skeleton {
+  background: linear-gradient(100deg, #E3E7DE 30%, #EEF1EA 50%, #E3E7DE 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* Scrolling announcement bar */
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Panels / toasts / drawers that answer a tap */
+.animate-slide-in { animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes slideIn {
+  from { transform: translateY(0.75rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Hero: progress fill for the active slide */
+.hero-progress { animation: heroFill 6s linear forwards; transform-origin: left; }
+@keyframes heroFill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #B7BFB0; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #98A391; }
+.admin-shell ::-webkit-scrollbar-thumb { background: #2B4136; }
+.admin-shell ::-webkit-scrollbar-thumb:hover { background: #435A4D; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee { animation: none; }
+  .animate-slide-in { animation: none; }
+  .skeleton { animation: none; }
+  .hero-progress { animation: none; transform: scaleX(1); }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
