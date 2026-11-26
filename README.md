@@ -104,7 +104,7 @@ Set your values:
 ```env
 VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-public-key
-VITE_WHATSAPP_NUMBER=919876543210
+VITE_WHATSAPP_NUMBER=91989223210
 ```
 
 > **Note:** Provide the WhatsApp phone number in international format **without** `+` or leading spaces (e.g. `919876543210` for India, `447123456789` for UK).
